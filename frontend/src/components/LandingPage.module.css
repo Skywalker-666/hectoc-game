@@ -1,0 +1,180 @@
+@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Poppins:wght@300;500;700&display=swap");
+
+:root {
+  /* Math-themed palette */
+  --color-primary: #2d3748;       /* Deep blue (headings) */
+  --color-secondary: #3b82f6;     /* Bright blue (interactive) */
+  --color-accent: #eab308;        /* Gold (accent) */
+  --color-bg-dark: #1a202c;       /* Dark background */
+  --color-text-light: #f8f9fa;    /* Light text */
+  --color-text-muted: #a0aec0;    /* Subdued text */
+
+  /* Spacing system (base 8px) */
+  --space-sm: 1rem;
+  --space-md: 1.5rem;
+  --space-lg: 2.5rem;
+  --space-xl: 4rem;
+
+  /* Animation curves */
+  --ease-bounce: cubic-bezier(0.68, -0.6, 0.32, 1.6);
+}
+
+/* Base Styles */
+.landingContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  width: 100%;
+  padding: var(--space-md);
+  box-sizing: border-box;
+  background: linear-gradient(135deg, 
+    #3b0764,  /* Deep purple */
+    #1e40af,  /* Royal blue */
+    #0ea5e9,  /* Sky blue */
+    #7e22ce   /* Violet */
+  );
+  background-size: 300% 300%;
+  animation: gradientAnimation 12s ease infinite;
+  text-align: center;
+  color: var(--color-text-light);
+  font-family: "Poppins", sans-serif;
+}
+
+@keyframes gradientAnimation {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Typography */
+.landingTitle {
+  font-size: var(--space-xl);
+  font-weight: 700;
+  margin-bottom: var(--space-md);
+  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(to right, 
+    #fef08a,  /* Light gold */
+    #f59e0b   /* Amber */
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  letter-spacing: 1px;
+}
+
+.landingText {
+  font-size: 1.25rem;
+  max-width: 700px;
+  margin-bottom: var(--space-lg);
+  line-height: 1.6;
+  opacity: 0.95;
+  color: var(--color-text-light);
+}
+
+/* Math-themed Clock */
+.clock {
+  font-size: 4.5rem;
+  font-family: "Orbitron", sans-serif;
+  font-weight: bold;
+  margin: var(--space-md) 0;
+  padding: var(--space-sm) var(--space-md);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.2),
+    inset 0 0 12px rgba(255, 255, 255, 0.2);
+  animation: pulse 2s infinite alternate;
+  color: var(--color-accent);  /* Gold digits */
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.03); }
+}
+
+/* Buttons */
+.buttonContainer {
+  display: flex;
+  gap: var(--space-md);
+  margin-top: var(--space-md);
+}
+
+.button {
+  padding: var(--space-sm) var(--space-lg);
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s var(--ease-bounce);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  position: relative;
+  overflow: hidden;
+  border: none;
+}
+
+.button:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(255, 255, 255, 0.3), 
+    transparent
+  );
+  transition: 0.5s;
+}
+
+.button:hover:before {
+  left: 100%;
+}
+
+.loginBtn {
+  background: linear-gradient(45deg, 
+    #4f46e5,  /* Indigo */
+    #7c3aed   /* Violet */
+  );
+  color: white;
+}
+
+.signupBtn {
+  background: linear-gradient(45deg, 
+    #10b981,  /* Emerald */
+    #84cc16   /* Lime */
+  );
+  color: var(--color-bg-dark);
+}
+
+.button:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .landingTitle {
+    font-size: 2.25rem;
+  }
+  
+  .landingText {
+    font-size: 1.1rem;
+    max-width: 90%;
+  }
+  
+  .clock {
+    font-size: 2.5rem;
+    padding: var(--space-sm);
+  }
+  
+  .buttonContainer {
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+}

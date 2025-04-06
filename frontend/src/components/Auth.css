@@ -1,0 +1,183 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+:root {
+  /* Reusing variables from landing.css */
+  --color-primary: #2d3748;
+  --color-secondary: #3b82f6;
+  --color-accent: #eab308;
+  --color-bg-dark: #1a202c;
+  --color-text-light: #f8f9fa;
+  --color-error: #ef4444;
+  --space-sm: 1rem;
+  --space-md: 1.5rem;
+  --space-lg: 2.5rem;
+}
+
+/* Auth Container - Matches landing gradient */
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, 
+    #3b0764,  /* Deep purple */
+    #1e40af,  /* Royal blue */
+    #0ea5e9   /* Sky blue */
+  );
+  background-size: 300% 300%;
+  animation: gradientAnimation 12s ease infinite;
+}
+
+/* Auth Box - Clean card with glass effect */
+.auth-box {
+  background: rgba(255, 255, 255, 0.95);
+  padding: var(--space-lg);
+  border-radius: 12px;
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.2),
+    inset 0 0 12px rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(8px);
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+  font-family: 'Poppins', sans-serif;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Title - Gold gradient like landing page */
+.auth-title {
+  background: linear-gradient(to right, 
+    var(--color-accent), 
+    #f59e0b
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: var(--space-md);
+}
+
+/* Form Elements */
+.auth-form .form-group {
+  margin-bottom: var(--space-sm);
+  text-align: left;
+}
+
+.auth-form .form-label {
+  display: block;
+  font-weight: 600;
+  color: var(--color-primary);
+  margin-bottom: 0.5rem;
+}
+
+/* Inputs - Calculator-style */
+.auth-form .form-control {
+  width: 100%;
+  padding: 0.8rem var(--space-sm);
+  border-radius: 8px;
+  border: 2px solid #e2e8f0;
+  font-family: 'Poppins', sans-serif;
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.auth-form .form-control:focus {
+  border-color: var(--color-secondary);
+  box-shadow: 
+    0 0 0 3px rgba(59, 130, 246, 0.2),
+    inset 0 1px 4px rgba(0, 0, 0, 0.1);
+  outline: none;
+}
+
+/* Buttons - Consistent with landing page */
+.auth-form .btn {
+  width: 100%;
+  padding: 0.8rem;
+  border-radius: 8px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  margin-top: 0.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.auth-form .btn:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(255, 255, 255, 0.3), 
+    transparent
+  );
+  transition: 0.5s;
+}
+
+.auth-form .btn:hover:before {
+  left: 100%;
+}
+
+.auth-form .btn-primary {
+  background: linear-gradient(45deg, 
+    #4f46e5,  /* Indigo */
+    #7c3aed   /* Violet */
+  );
+  color: white;
+}
+
+.auth-form .btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+}
+
+.auth-form .btn-danger {
+  background: linear-gradient(45deg, 
+    #ef4444,  /* Red-500 */
+    #dc2626   /* Red-600 */
+  );
+  color: white;
+}
+
+.auth-form .btn-danger:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+/* Switch Link */
+.auth-switch {
+  margin-top: var(--space-md);
+  font-size: 0.9rem;
+  color: var(--color-primary);
+}
+
+.auth-switch a {
+  color: var(--color-secondary);
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.auth-switch a:hover {
+  text-decoration: underline;
+  color: #2563eb;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .auth-box {
+    padding: var(--space-md);
+    width: 95%;
+  }
+  
+  .auth-title {
+    font-size: 1.5rem;
+  }
+}

@@ -1,0 +1,250 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Orbitron:wght@500&display=swap');
+
+:root {
+  /* Math-themed color palette */
+  --color-primary: #2d3748;
+  --color-secondary: #3b82f6;
+  --color-accent: #eab308;
+  --color-success: #10b981;
+  --color-error: #ef4444;
+  --color-bg-dark: #1a202c;
+  --color-text-light: #f8f9fa;
+  --color-border: rgba(255, 255, 255, 0.1);
+  
+  /* Spacing system */
+  --space-sm: 1rem;
+  --space-md: 1.5rem;
+  --space-lg: 2.5rem;
+  --space-xl: 3.5rem;
+  
+  /* Animation curves */
+  --ease-bounce: cubic-bezier(0.68, -0.6, 0.32, 1.6);
+}
+
+.game-container {
+  text-align: center;
+  padding: var(--space-lg);
+  max-width: 900px;
+  margin: var(--space-md) auto;
+  background: var(--color-bg-dark);
+  color: var(--color-text-light);
+  border-radius: 16px;
+  font-family: 'Poppins', sans-serif;
+  border: 1px solid var(--color-border);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    inset 0 0 16px rgba(255, 255, 255, 0.05);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Calculator-like display */
+.solution-display {
+  margin: var(--space-md) 0;
+}
+
+.solution-input {
+  width: 100%;
+  padding: var(--space-md);
+  font-size: 2.2rem;
+  font-family: 'Orbitron', monospace;
+  font-weight: 500;
+  border-radius: 12px;
+  border: 2px solid var(--color-border);
+  background: rgba(0, 0, 0, 0.3);
+  color: var(--color-accent);
+  text-align: center;
+  transition: all 0.3s ease;
+  box-shadow: 
+    inset 0 2px 4px rgba(0, 0, 0, 0.3),
+    0 0 0 2px rgba(234, 179, 8, 0.1);
+}
+
+.solution-input:focus {
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow: 
+    inset 0 2px 4px rgba(0, 0, 0, 0.3),
+    0 0 0 4px rgba(234, 179, 8, 0.2);
+}
+
+/* Math operation panels */
+.operations-panel, 
+.digits-panel {
+display: none;
+}
+
+.btn-operation, 
+.btn-digit {
+  font-size: 1.5rem;
+  padding: var(--space-sm);
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s var(--ease-bounce);
+  font-weight: 600;
+}
+
+.btn-operation {
+  background: linear-gradient(45deg, #4f46e5, #7c3aed);
+  color: white;
+}
+
+.btn-digit {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--color-text-light);
+  border: 1px solid var(--color-border);
+}
+
+.btn-operation:hover, 
+.btn-digit:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Game controls */
+.game-menu {
+  gap: var(--space-md);
+  margin-top: var(--space-xl);
+}
+
+.btn {
+  padding: var(--space-sm) var(--space-lg);
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s var(--ease-bounce);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary {
+  background: linear-gradient(45deg, var(--color-secondary), #2563eb);
+  color: white;
+}
+
+.btn-danger {
+  background: linear-gradient(45deg, var(--color-error), #dc2626);
+  color: white;
+}
+
+.btn-submit {
+  background: linear-gradient(45deg, var(--color-success), #059669);
+  color: white;
+}
+
+.btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Typography */
+.game-title {
+  font-size: var(--space-xl);
+  font-weight: 800;
+  margin-bottom: var(--space-md);
+  background: linear-gradient(90deg, 
+    var(--color-accent), 
+    #f59e0b
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  letter-spacing: 1px;
+}
+
+.game-subtitle {
+  font-size: 1.5rem;
+  margin-bottom: var(--space-md);
+  color: var(--color-accent);
+}
+
+/* Feedback messages */
+.message {
+  margin-top: var(--space-md);
+  padding: var(--space-sm);
+  border-radius: 8px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  animation: fadeIn 0.3s ease;
+}
+
+.message.success {
+  background: linear-gradient(45deg, var(--color-success), #059669);
+  color: white;
+}
+
+.message.error {
+  background: linear-gradient(45deg, var(--color-error), #dc2626);
+  color: white;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .game-container {
+    padding: var(--space-md);
+    margin: var(--space-sm);
+    border-radius: 12px;
+  }
+  
+  .game-title {
+    font-size: 2rem;
+  }
+  
+  .solution-input {
+    font-family: 'Orbitron', sans-serif;
+    letter-spacing: 0.3rem;
+  }
+  
+  .operations-panel, 
+  .digits-panel {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .btn {
+    padding: 0.8rem 1.2rem;
+  }
+}
+
+.user-display {
+  text-align: center;
+  margin-bottom: var(--space-lg);
+  padding: var(--space-sm);
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 12px;
+}
+
+.user-info {
+  font-size: 1.2rem;
+  color: var(--color-text-light);
+  margin-bottom: var(--space-sm);
+}
+
+.hectoc-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin: var(--space-sm) 0;
+  background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.current-numbers {
+  font-size: 3.5rem;
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 700;
+  color: var(--color-accent);
+  letter-spacing: 0.5rem;
+  text-shadow: 0 0 10px rgba(234, 179, 8, 0.5);
+  margin: var(--space-md) 0;
+}
+.btn-clear {
+  background: linear-gradient(45deg, #3b82f6, #2563eb) !important;
+}
