@@ -3,8 +3,7 @@ import { useNavigate } from "react-router-dom";
 import io from "socket.io-client";
 import "./Leaderboard.css";
 
-
-
+// ✅ Use environment variable for backend URL
 const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
 const socket = io(API_URL, { transports: ["websocket"] });
 

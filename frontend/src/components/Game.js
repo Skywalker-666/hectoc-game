@@ -1,10 +1,12 @@
-// === FRONTEND: Game.js ===
 import React, { useState, useEffect } from "react";
 import { io } from "socket.io-client";
 import { useNavigate } from "react-router-dom";
 import "./Game.css";
 
-const socket = io("http://localhost:5000");
+// ✅ Use environment variable
+const socket = io(process.env.REACT_APP_API_URL, {
+  transports: ["websocket"], // Ensures WebSocket is used
+});
 
 const Game = () => {
   const [digits, setDigits] = useState([]);
@@ -78,7 +80,6 @@ const Game = () => {
     setWaiting(true);
     setMessage("Searching for an opponent...");
   };
-  
 
   const cancelDuel = () => {
     socket.emit("cancel-duel");

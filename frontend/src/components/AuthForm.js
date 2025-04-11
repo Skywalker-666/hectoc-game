@@ -1,4 +1,3 @@
-// src/components/AuthForm.js
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
@@ -16,6 +15,8 @@ const AuthForm = ({ isSignup }) => {
   const [username, setUsername] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
+
+  const API = process.env.REACT_APP_API_URL;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -37,14 +38,13 @@ const AuthForm = ({ isSignup }) => {
       const finalUsername = isSignup ? username : email.split("@")[0];
       const token = await user.getIdToken();
 
-      // Log the token for debugging (ensure it starts with "eyJ")
       console.log("✅ Firebase ID Token:", token);
 
       localStorage.setItem("username", finalUsername);
       localStorage.setItem("uid", user.uid);
 
       const response = await fetch(
-        `http://localhost:5000/api/auth/${isSignup ? "signup" : "login"}`,
+        `${API}/api/auth/${isSignup ? "signup" : "login"}`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -79,13 +79,12 @@ const AuthForm = ({ isSignup }) => {
       const finalUsername = user.displayName || user.email.split("@")[0];
       const token = await user.getIdToken();
 
-      // Log the Google token as well
       console.log("✅ Google ID Token:", token);
 
       localStorage.setItem("username", finalUsername);
       localStorage.setItem("uid", user.uid);
 
-      const response = await fetch("http://localhost:5000/api/auth/login", {
+      const response = await fetch(`${API}/api/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
