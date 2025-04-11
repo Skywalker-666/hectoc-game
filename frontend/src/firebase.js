@@ -1,9 +1,10 @@
+// src/firebase.js
 import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider } from "firebase/auth";
-import { getAnalytics } from "firebase/analytics";
 
+// 🔐 Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyDB9w1yQLBi8-enm-XXXktwowZQ-Mh-FPQ",
+  apiKey: "AIzaSyDB9w1yQLBi8-enm-XXXktwowZQ-Mh-FPQ", // ✅ replace XXX with real part if masked
   authDomain: "auth-ed81d.firebaseapp.com",
   projectId: "auth-ed81d",
   storageBucket: "auth-ed81d.appspot.com",
@@ -12,8 +13,14 @@ const firebaseConfig = {
   measurementId: "G-NH6HB8KV4E",
 };
 
-// Initialize Firebase
+// 🔧 Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-export const auth = getAuth(app);
-export const googleProvider = new GoogleAuthProvider(); // ✅ Export Google Provider
+
+// ⚙️ Get Auth and Google Provider
+const auth = getAuth(app);
+const googleProvider = new GoogleAuthProvider();
+
+// 🧪 Optional: Set language to browser's default
+auth.useDeviceLanguage(); // improves UX for localized messages
+
+export { auth, googleProvider };
