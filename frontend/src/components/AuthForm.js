@@ -1,3 +1,4 @@
+// src/components/AuthForm.js
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
@@ -16,11 +17,12 @@ const AuthForm = ({ isSignup }) => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const API = process.env.REACT_APP_API_URL;
+  const API = process.env.REACT_APP_API_URL || "http://localhost:5000";
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+
     try {
       let userCredential;
 
@@ -38,36 +40,27 @@ const AuthForm = ({ isSignup }) => {
       const finalUsername = isSignup ? username : email.split("@")[0];
       const token = await user.getIdToken();
 
-      console.log("✅ Firebase ID Token:", token);
+      const response = await fetch(`${API}/api/auth/${isSignup ? "signup" : "login"}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          uid: user.uid,
+          email: user.email,
+          displayName: finalUsername,
+          username: finalUsername,
+          token,
+        }),
+      });
+
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.message || "Signup/Login failed");
 
       localStorage.setItem("username", finalUsername);
       localStorage.setItem("uid", user.uid);
-
-      const response = await fetch(
-        `${API}/api/auth/${isSignup ? "signup" : "login"}`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            uid: user.uid,
-            email: user.email,
-            displayName: finalUsername,
-            username: finalUsername,
-            token,
-          }),
-        }
-      );
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.message || "Signup/Login failed");
-      }
-
       navigate(isSignup ? "/login" : "/game");
     } catch (err) {
       console.error("❌ Auth error:", err.message);
-      setError(err.message || "Authentication failed. Please check your credentials.");
+      setError(err.message || "Authentication failed.");
     }
   };
 
@@ -78,11 +71,6 @@ const AuthForm = ({ isSignup }) => {
       const user = result.user;
       const finalUsername = user.displayName || user.email.split("@")[0];
       const token = await user.getIdToken();
-
-      console.log("✅ Google ID Token:", token);
-
-      localStorage.setItem("username", finalUsername);
-      localStorage.setItem("uid", user.uid);
 
       const response = await fetch(`${API}/api/auth/login`, {
         method: "POST",
@@ -97,15 +85,14 @@ const AuthForm = ({ isSignup }) => {
       });
 
       const data = await response.json();
+      if (!response.ok) throw new Error(data.message || "Google Sign-In failed");
 
-      if (!response.ok) {
-        throw new Error(data.message || "Google Sign-In failed");
-      }
-
+      localStorage.setItem("username", finalUsername);
+      localStorage.setItem("uid", user.uid);
       navigate("/game");
     } catch (err) {
       console.error("❌ Google Sign-In error:", err.message);
-      setError(err.message || "Google Sign-In failed. Try again.");
+      setError(err.message || "Google Sign-In failed");
     }
   };
 

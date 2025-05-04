@@ -1,11 +1,13 @@
+// src/pages/Game.js
 import React, { useState, useEffect } from "react";
 import { io } from "socket.io-client";
 import { useNavigate } from "react-router-dom";
 import "./Game.css";
 
-// ✅ Use environment variable
-const socket = io(process.env.REACT_APP_API_URL, {
-  transports: ["websocket"], // Ensures WebSocket is used
+// ✅ Use environment variable or fallback
+const API = process.env.REACT_APP_API_URL || "http://localhost:5000";
+const socket = io(API, {
+  transports: ["websocket"],
 });
 
 const Game = () => {
@@ -17,7 +19,6 @@ const Game = () => {
   const [duelMode, setDuelMode] = useState(false);
   const [username, setUsername] = useState("");
   const [opponentName, setOpponentName] = useState("");
-
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -32,10 +33,7 @@ const Game = () => {
       setDuelMode(false);
     });
 
-    socket.on("solution-validated", (result) => {
-      setMessage(result);
-    });
-
+    socket.on("solution-validated", setMessage);
     socket.on("waiting-for-opponent", () => {
       setWaiting(true);
       setMessage("Waiting for an opponent...");
@@ -96,9 +94,7 @@ const Game = () => {
     socket.emit("submit-solution", { solution, duelMode, uid });
   };
 
-  const clearSolution = () => {
-    setSolution("");
-  };
+  const clearSolution = () => setSolution("");
 
   const returnToMenu = () => {
     setGameStarted(false);
@@ -118,7 +114,6 @@ const Game = () => {
   return (
     <div className="game-container">
       <h1>Hectoc Game</h1>
-
       {username && (
         <div className="mb-3 text-start">
           <strong>👤 Logged in as:</strong>{" "}
@@ -146,13 +141,9 @@ const Game = () => {
             </button>
           )}
 
-          <button
-            className="btn btn-info mb-2"
-            onClick={() => navigate("/leaderboard")}
-          >
+          <button className="btn btn-info mb-2" onClick={() => navigate("/leaderboard")}>
             📊 View Leaderboard
           </button>
-
           <button className="btn btn-secondary" onClick={handleLogout}>
             Logout
           </button>
@@ -177,27 +168,14 @@ const Game = () => {
             />
           </div>
 
-          {/* === Button Group === */}
           <div className="button-group mt-4">
-            <button className="btn btn-clear" onClick={clearSolution}>
-              ❌ Clear
-            </button>
-            <button className="btn btn-success" onClick={submitSolution}>
-              ✅ Submit
-            </button>
-            <button className="btn btn-warning" onClick={returnToMenu}>
-              ⬅ Return to Menu
-            </button>
+            <button className="btn btn-clear" onClick={clearSolution}>❌ Clear</button>
+            <button className="btn btn-success" onClick={submitSolution}>✅ Submit</button>
+            <button className="btn btn-warning" onClick={returnToMenu}>⬅ Return to Menu</button>
           </div>
 
           {message && (
-            <div
-              className={`message ${
-                message.includes("Correct") || message.includes("win")
-                  ? "success"
-                  : "error"
-              }`}
-            >
+            <div className={`message ${message.includes("win") || message.includes("Correct") ? "success" : "error"}`}>
               {message}
             </div>
           )}
